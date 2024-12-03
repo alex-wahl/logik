@@ -1,0 +1,61 @@
+
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{circledsteps}
+
+\title{AL-Hausarbeit Aufgabe 1}
+\author{Gruppe: 0395694, 678901, 234567}
+\date{WiSe 24/25}
+
+\begin{document}
+\maketitle
+\section*{Aufgabe 1}
+
+\section*{Hausaufgabe 1}
+
+\subsection*{Formel $\phi_{K,T,P,M}$}
+
+Sei $K$ die Menge der Kommiliton*innen, $T$ die Menge der möglichen Termine, $P$ die Menge der Plätzchensorten, 
+und $M \subseteq K \times P$ die Relation, die $(k, p)$ enthält, falls $k$ die Plätzchensorte $p$ mag.
+
+Die Bedingungen können wie folgt als logische Formel $\phi_{K,T,P,M} \in AL$ formuliert werden:
+
+\begin{itemize}
+    \item[(i)] Jede*r Kommiliton*in wird genau einem Termin zugewiesen, und es gibt mindestens einen Ausweichtermin:
+    \[
+    \bigwedge_{k \in K} \left( \bigvee_{t \in T} \text{eingeladen}(k, t) \land \bigvee_{t' \in T \setminus \{t\}} \text{ausweichtermin}(k, t') \right)
+    \]
+    wobei $\text{eingeladen}(k, t)$ ausdrückt, dass $k$ zu $t$ eingeladen ist, und $\text{ausweichtermin}(k, t')$, dass $t'$ ein Ausweichtermin für $k$ ist.
+
+    \item[(ii)] Jede Plätzchensorte wird bei maximal einem Treffen gebacken:
+    \[
+    \bigwedge_{p \in P} \bigvee_{t \in T} \text{gebacken}(p, t)
+    \]
+
+    \item[(iii)] An Terminen ohne Einladungen werden keine Plätzchen gebacken, und umgekehrt:
+    \[
+    \bigwedge_{t \in T} \left( \bigvee_{k \in K} \text{eingeladen}(k, t) \leftrightarrow \bigvee_{p \in P} \text{gebacken}(p, t) \right)
+    \]
+
+    \item[(iv)] Wenn jemand eingeladen wird, muss diese Person alle Plätzchensorten mögen, die gebacken werden:
+    \[
+    \bigwedge_{k \in K} \bigwedge_{t \in T} \left( \text{eingeladen}(k, t) \rightarrow \bigwedge_{p \in P} (\text{gebacken}(p, t) \rightarrow (k, p) \in M) \right)
+    \]
+
+    \item[(v)] An jedem Ausweichtermin muss mindestens eine Plätzchensorte gebacken werden, die die Person mag:
+    \[
+    \bigwedge_{k \in K} \bigwedge_{t \in T} \left( \text{ausweichtermin}(k, t) \rightarrow \bigvee_{p \in P} (\text{gebacken}(p, t) \land (k, p) \in M) \right)
+    \]
+\end{itemize}
+
+\subsection*{Ergebnisse aus der Belegung ablesen}
+Eine erfüllende Belegung der Formel $\phi_{K,T,P,M}$ erlaubt die folgende Interpretation:
+\begin{itemize}
+    \item $\text{eingeladen}(k, t)$: $k$ wird zu $t$ eingeladen.
+    \item $\text{ausweichtermin}(k, t)$: $t$ ist ein Ausweichtermin für $k$.
+    \item $\text{gebacken}(p, t)$: Die Plätzchensorte $p$ wird an $t$ gebacken.
+\end{itemize}
+Aus der erfüllenden Belegung können wir direkt entnehmen, wer zu welchem Termin eingeladen ist, welche Plätzchensorten gebacken werden und welche Termine Ausweichtermine sind.
+
+\end{document}
