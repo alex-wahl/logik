@@ -1,0 +1,71 @@
+
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{circledsteps}
+
+\title{AL-Hausarbeit Aufgabe X}
+\author{Gruppe: 0395694, 678901, 234567}
+\date{WiSe 24/25}
+
+\begin{document}
+\maketitle
+\section*{Aufgabe 1}
+
+\section*{Hausaufgabe 2}
+
+\subsection*{(i) Äquivalente Formeln für $(Y \land Z)$ und $r_5 \langle Y, Z \rangle$}
+\begin{itemize}
+    \item Eine äquivalente Formel $\psi \in AL_{6,1,5}$ für $(Y \land Z)$ ist:
+    \[
+    r_5 \langle Y, Z, \top, \top, \bot \rangle
+    \]
+    Diese Formel repräsentiert die Konjunktion, da $r_5$ die Modulo-Semantik nutzt, um zu garantieren, dass nur die Belegungen $(1, 1)$ wahr sind.
+    
+    \item Eine äquivalente Formel $\psi \in AL$ für $r_5 \langle Y, Z \rangle \in AL_{6,1,5}$ ist:
+    \[
+    (Y \lor Z) \land \neg (Y \land Z)
+    \]
+    Diese Formel entspricht der Modulo-Definition von $r_5$ für die Semantik, in der der Rest $1$ erfüllt sein muss.
+\end{itemize}
+
+\subsection*{(ii) Formeln $\chi_1$ und $\chi_2$ und ihre Äquivalenz}
+\begin{itemize}
+    \item Eine Formel $\chi_1 \in AL_{2,2,4} \setminus AL_{5,0,3}$ ist:
+    \[
+    r_4 \langle X, Y \rangle
+    \]
+    Diese Formel ist in $AL_{2,2,4}$ definiert, da sie modulo $4$ arbeitet, was in $AL_{5,0,3}$ nicht erlaubt ist.
+
+    \item Eine Formel $\chi_2 \in AL_{5,0,3} \setminus AL_{2,2,4}$ ist:
+    \[
+    r_3 \langle X, Y, Z \rangle
+    \]
+    Diese Formel ist in $AL_{5,0,3}$ definiert, da sie auf Modulo $3$ basiert, was in $AL_{2,2,4}$ nicht zulässig ist.
+
+    \item Die Äquivalenz kann durch die Semantik der jeweiligen Modulo-Operationen gezeigt werden: Beide Formeln bewirken eine spezifische Auswahl der Werte basierend auf der Restklassenarithmetik, jedoch in unterschiedlichen Systemen (Modulo $4$ vs. Modulo $3$).
+\end{itemize}
+
+\subsection*{(iii) Beweis, dass nicht jede Formel in $AL$ äquivalent zu einer in $AL_{2,2,4}$ ist}
+\begin{proof}
+Angenommen, es gäbe für jede Formel $\phi \in AL$ eine äquivalente Formel $\psi \in AL_{2,2,4}$. Nehmen wir eine Formel $\phi = r_5 \langle X, Y \rangle$. Diese Formel nutzt Modulo $5$, welches nicht in $AL_{2,2,4}$ unterstützt wird (nur Modulo $4$ ist erlaubt). Da die Modulo-Arithmetik nicht äquivalent dargestellt werden kann, ist $\phi$ nicht durch eine Formel in $AL_{2,2,4}$ ausdrückbar.
+\end{proof}
+
+\subsection*{(iv) Beweis durch strukturelle Induktion für $AL_{5,0,3}$}
+\begin{proof}
+Wir zeigen, dass jede Formel $\phi \in AL$ äquivalent zu einer Formel in $AL_{5,0,3}$ ist, indem wir strukturelle Induktion auf die Syntax von $AL$ anwenden.
+
+\textbf{Induktionsanfang:} Für atomare Formeln $X \in AL$ ist $X$ direkt in $AL_{5,0,3}$ enthalten.
+
+\textbf{Induktionsannahme:} Sei $\phi_1, \phi_2 \in AL$ und seien sie äquivalent zu Formeln $\psi_1, \psi_2 \in AL_{5,0,3}$.
+
+\textbf{Induktionsschritt:} Für zusammengesetzte Formeln gilt:
+\begin{itemize}
+    \item $\neg \phi_1$: Da $\phi_1 \in AL_{5,0,3}$, ist auch $\neg \phi_1 \in AL_{5,0,3}$.
+    \item $(\phi_1 \land \phi_2)$: Da $\phi_1, \phi_2 \in AL_{5,0,3}$, ist auch $(\phi_1 \land \phi_2) \in AL_{5,0,3}$.
+    \item $r_3 \langle \phi_1, \phi_2 \rangle$: Diese Formel ist in $AL_{5,0,3}$ durch Definition der Modulo-Semantik enthalten.
+\end{itemize}
+Somit ist jede Formel in $AL$ äquivalent zu einer Formel in $AL_{5,0,3}$.
+\end{proof}
+
+\end{document}
