@@ -1,71 +1,84 @@
-
 \documentclass[12pt,a4paper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath,amsfonts,amssymb}
 \usepackage{circledsteps}
+\usepackage[margin=2.5cm]{geometry}
 
-\title{AL-Hausarbeit Aufgabe X}
+\title{AL-Hausarbeit Aufgabe 2}
 \author{Gruppe: 0395694, 678901, 234567}
 \date{WiSe 24/25}
 
 \begin{document}
 \maketitle
-\section*{Aufgabe 1}
 
-\section*{Hausaufgabe 2}
+\subsection*{(i) Äquivalente Formeln}
 
-\subsection*{(i) Äquivalente Formeln für $(Y \land Z)$ und $r_5 \langle Y, Z \rangle$}
 \begin{itemize}
     \item Eine äquivalente Formel $\psi \in AL_{6,1,5}$ für $(Y \land Z)$ ist:
     \[
-    r_5 \langle Y, Z, \top, \top, \bot \rangle
+    r_5\langle Y, Y, Z, Z, Z \rangle
     \]
-    Diese Formel repräsentiert die Konjunktion, da $r_5$ die Modulo-Semantik nutzt, um zu garantieren, dass nur die Belegungen $(1, 1)$ wahr sind.
+    Diese Formel ist äquivalent zu $Y \land Z$, da sie genau dann 1 ergibt, wenn die Summe der Wahrheitswerte $\equiv 1 \pmod{5}$ ist, was nur bei $Y=Z=1$ der Fall ist.
     
-    \item Eine äquivalente Formel $\psi \in AL$ für $r_5 \langle Y, Z \rangle \in AL_{6,1,5}$ ist:
+    \item Eine äquivalente Formel in AL für $r_5\langle Y,Z \rangle$ ist:
     \[
-    (Y \lor Z) \land \neg (Y \land Z)
+    (Y \land \neg Z) \lor (\neg Y \land Z)
     \]
-    Diese Formel entspricht der Modulo-Definition von $r_5$ für die Semantik, in der der Rest $1$ erfüllt sein muss.
+    Diese Formel ist äquivalent zu $r_5\langle Y,Z \rangle$, da sie genau dann 1 ergibt, wenn genau eine der beiden Variablen 1 ist, was der Bedingung $JYK^\beta + JZK^\beta \equiv 1 \pmod{5}$ entspricht.
 \end{itemize}
 
-\subsection*{(ii) Formeln $\chi_1$ und $\chi_2$ und ihre Äquivalenz}
+\subsection*{(ii) Äquivalente Formeln $\chi_1$ und $\chi_2$}
+
 \begin{itemize}
-    \item Eine Formel $\chi_1 \in AL_{2,2,4} \setminus AL_{5,0,3}$ ist:
+    \item $\chi_1 \in AL_{2,2,4} \setminus AL_{5,0,3}$:
     \[
-    r_4 \langle X, Y \rangle
+    r_4\langle X, X \rangle
     \]
-    Diese Formel ist in $AL_{2,2,4}$ definiert, da sie modulo $4$ arbeitet, was in $AL_{5,0,3}$ nicht erlaubt ist.
-
-    \item Eine Formel $\chi_2 \in AL_{5,0,3} \setminus AL_{2,2,4}$ ist:
+    
+    \item $\chi_2 \in AL_{5,0,3} \setminus AL_{2,2,4}$:
     \[
-    r_3 \langle X, Y, Z \rangle
+    r_3\langle X, X, X, X, X \rangle
     \]
-    Diese Formel ist in $AL_{5,0,3}$ definiert, da sie auf Modulo $3$ basiert, was in $AL_{2,2,4}$ nicht zulässig ist.
-
-    \item Die Äquivalenz kann durch die Semantik der jeweiligen Modulo-Operationen gezeigt werden: Beide Formeln bewirken eine spezifische Auswahl der Werte basierend auf der Restklassenarithmetik, jedoch in unterschiedlichen Systemen (Modulo $4$ vs. Modulo $3$).
+    
+    Diese Formeln sind äquivalent, da beide genau dann 1 ergeben, wenn $X=1$ ist:
+    \begin{itemize}
+        \item Für $\chi_1$: $r_4\langle X, X \rangle = 1$ gdw. $2\cdot JXK^\beta \equiv 2 \pmod{4}$ gdw. $X=1$
+        \item Für $\chi_2$: $r_3\langle X, X, X, X, X \rangle = 1$ gdw. $5\cdot JXK^\beta \equiv 0 \pmod{3}$ gdw. $X=1$
+    \end{itemize}
 \end{itemize}
 
-\subsection*{(iii) Beweis, dass nicht jede Formel in $AL$ äquivalent zu einer in $AL_{2,2,4}$ ist}
+\subsection*{(iii) Beweis der Nicht-Definierbarkeit in $AL_{2,2,4}$}
+
 \begin{proof}
-Angenommen, es gäbe für jede Formel $\phi \in AL$ eine äquivalente Formel $\psi \in AL_{2,2,4}$. Nehmen wir eine Formel $\phi = r_5 \langle X, Y \rangle$. Diese Formel nutzt Modulo $5$, welches nicht in $AL_{2,2,4}$ unterstützt wird (nur Modulo $4$ ist erlaubt). Da die Modulo-Arithmetik nicht äquivalent dargestellt werden kann, ist $\phi$ nicht durch eine Formel in $AL_{2,2,4}$ ausdrückbar.
+Wir zeigen, dass die Formel $\phi := (X \land Y) \lor (Y \land Z) \lor (Z \land X)$ keine äquivalente Formel in $AL_{2,2,4}$ hat.
+
+Angenommen, es gäbe eine äquivalente Formel $\psi \in AL_{2,2,4}$. Da in $AL_{2,2,4}$ nur Formeln mit maximal 2 Argumenten und Modulo-4-Operationen erlaubt sind, kann $\psi$ maximal $2^4 = 16$ verschiedene Wahrheitswertekombinationen unterscheiden.
+
+Die Formel $\phi$ ist jedoch wahr genau dann, wenn mindestens zwei der drei Variablen 1 sind. Dies erfordert die Unterscheidung von mehr als 16 verschiedenen Kombinationen, was in $AL_{2,2,4}$ nicht möglich ist.
 \end{proof}
 
-\subsection*{(iv) Beweis durch strukturelle Induktion für $AL_{5,0,3}$}
+\subsection*{(iv) Beweis durch strukturelle Induktion}
+
 \begin{proof}
-Wir zeigen, dass jede Formel $\phi \in AL$ äquivalent zu einer Formel in $AL_{5,0,3}$ ist, indem wir strukturelle Induktion auf die Syntax von $AL$ anwenden.
+Wir zeigen durch strukturelle Induktion, dass jede Formel $\phi \in AL$ äquivalent zu einer Formel in $AL_{5,0,3}$ ist.
 
-\textbf{Induktionsanfang:} Für atomare Formeln $X \in AL$ ist $X$ direkt in $AL_{5,0,3}$ enthalten.
-
-\textbf{Induktionsannahme:} Sei $\phi_1, \phi_2 \in AL$ und seien sie äquivalent zu Formeln $\psi_1, \psi_2 \in AL_{5,0,3}$.
-
-\textbf{Induktionsschritt:} Für zusammengesetzte Formeln gilt:
+\textbf{Induktionsbasis:} 
 \begin{itemize}
-    \item $\neg \phi_1$: Da $\phi_1 \in AL_{5,0,3}$, ist auch $\neg \phi_1 \in AL_{5,0,3}$.
-    \item $(\phi_1 \land \phi_2)$: Da $\phi_1, \phi_2 \in AL_{5,0,3}$, ist auch $(\phi_1 \land \phi_2) \in AL_{5,0,3}$.
-    \item $r_3 \langle \phi_1, \phi_2 \rangle$: Diese Formel ist in $AL_{5,0,3}$ durch Definition der Modulo-Semantik enthalten.
+    \item Für Variablen $X \in AL$ ist $X$ bereits in $AL_{5,0,3}$.
+    \item Für Konstanten $\top, \bot$ sind diese direkt durch $r_3\langle X,X,X,X,X \rangle$ bzw. $\neg r_3\langle X,X,X,X,X \rangle$ darstellbar.
 \end{itemize}
-Somit ist jede Formel in $AL$ äquivalent zu einer Formel in $AL_{5,0,3}$.
+
+\textbf{Induktionsvoraussetzung:} Sei $\phi_1, \phi_2 \in AL$ und seien $\psi_1, \psi_2 \in AL_{5,0,3}$ die entsprechenden äquivalenten Formeln.
+
+\textbf{Induktionsschritt:} Für zusammengesetzte Formeln:
+\begin{itemize}
+    \item $\neg \phi_1$ ist äquivalent zu $\neg \psi_1 \in AL_{5,0,3}$
+    \item $\phi_1 \land \phi_2$ ist äquivalent zu $r_3\langle \psi_1, \psi_1, \psi_2, \psi_2, \psi_2 \rangle \in AL_{5,0,3}$
+    \item $\phi_1 \lor \phi_2$ ist äquivalent zu $\neg r_3\langle \neg\psi_1, \neg\psi_1, \neg\psi_2, \neg\psi_2, \neg\psi_2 \rangle \in AL_{5,0,3}$
+    \item $\phi_1 \rightarrow \phi_2$ ist äquivalent zu $\neg \psi_1 \lor \psi_2$, was nach obigem Fall darstellbar ist
+\end{itemize}
+
+Somit ist durch Induktion gezeigt, dass jede Formel in AL äquivalent zu einer Formel in $AL_{5,0,3}$ ist.
 \end{proof}
 
 \end{document}
