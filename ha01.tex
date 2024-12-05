@@ -1,8 +1,7 @@
 \documentclass[12pt,a4paper]{article}
 \usepackage[utf8]{inputenc}
-\usepackage{amsmath,amsfonts,amssymb}
-\usepackage{circledsteps}
-\usepackage[margin=2.5cm]{geometry}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{lmodern}
 
 \title{AL-Hausarbeit Aufgabe 1}
 \author{Gruppe: 0395694, 678901, 234567}
@@ -10,55 +9,69 @@
 
 \begin{document}
 \maketitle
+
 \section*{Aufgabe 1}
-\subsection*{Formel $\phi_{K,T,P,M}$}
 
-Sei $K$ die Menge der Kommiliton*innen, $T$ die Menge der möglichen Termine, $P$ die Menge der Plätzchensorten, 
-und $M \subseteq K \times P$ die Relation, die $(k, p)$ enthält, falls $k$ die Plätzchensorte $p$ mag.
+\subsection*{Formel $\varphi_{K,T,P,M}$}
 
-Die Bedingungen können wie folgt als logische Formel $\phi_{K,T,P,M} \in AL$ formuliert werden:
+Sei $K$ die Menge der Kommiliton*innen, $T$ die Menge der möglichen Termine, 
+$P$ die Menge der Plätzchensorten und $M \subseteq K \times P$ die Relation, 
+die $(k,p)$ enthält, falls $k$ die Plätzchensorte $p$ mag.
 
+Verwendete atomare Formeln:
 \begin{itemize}
-   \item[(i)] Jede*r Kommiliton*in wird genau einem Termin zugewiesen, und es gibt mindestens einen Ausweichtermin:
-   \begin{align*}
-   &\bigwedge_{k \in K} \Big( 
-       \big(\bigvee_{t \in T} \text{eingeladen}(k, t)\big) \land \\
-   &\qquad\big(\bigwedge_{t,t' \in T, t \neq t'} \neg(\text{eingeladen}(k,t) \land \text{eingeladen}(k,t'))\big) \land \\
-   &\qquad\big(\bigvee_{t \in T} \text{eingeladen}(k, t) \land 
-       \bigvee_{t' \in T \setminus \{t\}} \text{ausweichtermin}(k, t')\big)
-   \Big)
-   \end{align*}
-   wobei $\text{eingeladen}(k, t)$ ausdrückt, dass $k$ zu $t$ eingeladen ist, und $\text{ausweichtermin}(k, t)$, dass $t$ ein möglicher Ersatztermin für $k$ ist.
-
-   \item[(ii)] Jede Plätzchensorte wird bei maximal einem Treffen gebacken:
-   \[
-   \bigwedge_{p \in P} \bigwedge_{t,t' \in T, t \neq t'} \neg(\text{gebacken}(p,t) \land \text{gebacken}(p,t'))
-   \]
-
-   \item[(iii)] An Terminen ohne Einladungen werden keine Plätzchen gebacken, und umgekehrt:
-   \[
-   \bigwedge_{t \in T} \left( \bigvee_{k \in K} \text{eingeladen}(k, t) \leftrightarrow \bigvee_{p \in P} \text{gebacken}(p, t) \right)
-   \]
-
-   \item[(iv)] Wenn jemand eingeladen wird, muss diese Person alle Plätzchensorten mögen, die gebacken werden:
-   \begin{align*}
-   &\bigwedge_{k \in K} \bigwedge_{t \in T} \Big( \text{eingeladen}(k, t) \rightarrow \\
-   &\qquad\bigwedge_{p \in P} (\text{gebacken}(p, t) \rightarrow (k, p) \in M) \Big)
-   \end{align*}
-
-   \item[(v)] An jedem Ausweichtermin muss mindestens eine Plätzchensorte gebacken werden, die die Person mag:
-   \begin{align*}
-   &\bigwedge_{k \in K} \bigwedge_{t \in T} \Big( \text{ausweichtermin}(k, t) \rightarrow \\
-   &\qquad\bigvee_{p \in P} (\text{gebacken}(p, t) \land (k, p) \in M) \Big)
-   \end{align*}
+    \item $\text{eingeladen}(k,t)$: Person $k$ ist zu Termin $t$ eingeladen.
+    \item $\text{ausweichtermin}(k,t)$: Termin $t$ ist ein Ausweichtermin für Person $k$.
+    \item $\text{gebacken}(p,t)$: Die Plätzchensorte $p$ wird an Termin $t$ gebacken.
 \end{itemize}
 
+Wir fordern:
+
+(i) Jede*r Kommiliton*in wird genau einem Termin zugewiesen, und es gibt mindestens einen weiteren Termin als Ausweichtermin. Außerdem soll jede*r nur einen Einladungstermin haben.
+
+Erläuterung außerhalb der Formel:  
+- Der Ausdruck $\bigvee_{t \in T}(\text{eingeladen}(k,t) \wedge \bigvee_{t' \in T\setminus\{t\}}\text{ausweichtermin}(k,t'))$ stellt sicher, dass es für jede Person $k$ genau einen Termin gibt, zu dem $k$ eingeladen ist, und mindestens einen anderen Termin als Ausweichtermin.  
+- Der Ausdruck $\bigwedge_{\substack{t,t' \in T \\ t \neq t'}} \neg(\text{eingeladen}(k,t)\wedge\text{eingeladen}(k,t'))$ stellt sicher, dass es nicht zwei unterschiedliche Einladungstermine für dieselbe Person gibt.
+
+\begin{align*}
+\varphi_{K,T,P,M} := 
+& \bigwedge_{k \in K}\Biggl[
+   \Bigl(
+     \bigvee_{t \in T}\bigl(\text{eingeladen}(k,t) \wedge \bigvee_{t' \in T\setminus\{t\}} \text{ausweichtermin}(k,t')\bigr)
+   \Bigr) \\
+& \qquad\wedge
+   \bigwedge_{\substack{t,t' \in T \\ t \neq t'}} 
+     \neg\bigl(\text{eingeladen}(k,t)\wedge \text{eingeladen}(k,t')\bigr)
+\Biggr].
+\end{align*}
+
+(ii) Jede Plätzchensorte wird bei maximal einem Treffen gebacken:
+\[
+\bigwedge_{p \in P}\bigwedge_{\substack{t,t' \in T \\ t \neq t'}} \neg(\text{gebacken}(p,t) \wedge \text{gebacken}(p,t')).
+\]
+
+(iii) An Terminen ohne Einladungen werden keine Plätzchen gebacken, und umgekehrt:
+\[
+\bigwedge_{t \in T} \left( \bigvee_{k \in K}\text{eingeladen}(k,t) \;\leftrightarrow\; \bigvee_{p \in P}\text{gebacken}(p,t) \right).
+\]
+
+(iv) Wenn jemand eingeladen wird, muss diese Person alle gebackenen Plätzchensorten mögen:
+\[
+\bigwedge_{k \in K}\bigwedge_{t \in T}\bigl(\text{eingeladen}(k,t) \to \bigwedge_{p \in P}(\text{gebacken}(p,t) \to ((k,p)\in M))\bigr).
+\]
+
+(v) An jedem Ausweichtermin muss mindestens eine Plätzchensorte gebacken werden, die die Person mag:
+\[
+\bigwedge_{k \in K}\bigwedge_{t \in T}\bigl(\text{ausweichtermin}(k,t) \to \bigvee_{p \in P}(\text{gebacken}(p,t)\wedge((k,p)\in M))\bigr).
+\]
+
 \subsection*{Ergebnisse aus der Belegung ablesen}
-Eine erfüllende Belegung der Formel $\phi_{K,T,P,M}$ erlaubt die folgende Interpretation:
+
+Eine erfüllende Belegung der Formel $\varphi_{K,T,P,M}$ erlaubt die folgende Interpretation:
 \begin{itemize}
-   \item $\text{eingeladen}(k, t)$: $k$ wird zu $t$ eingeladen.
-   \item $\text{ausweichtermin}(k, t)$: $t$ ist ein möglicher Ersatztermin für $k$.
-   \item $\text{gebacken}(p, t)$: Die Plätzchensorte $p$ wird an $t$ gebacken.
+    \item $\text{eingeladen}(k,t)$: $k$ wird zu $t$ eingeladen.
+    \item $\text{ausweichtermin}(k,t)$: $t$ ist ein möglicher Ersatztermin für $k$.
+    \item $\text{gebacken}(p,t)$: Die Plätzchensorte $p$ wird an $t$ gebacken.
 \end{itemize}
 
 Aus der erfüllenden Belegung können wir direkt entnehmen, wer zu welchem Termin eingeladen ist, welche Plätzchensorten gebacken werden und welche Termine mögliche Ersatztermine sind.
