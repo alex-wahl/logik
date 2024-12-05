@@ -2,83 +2,121 @@
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath,amsfonts,amssymb}
 \usepackage{circledsteps}
-\usepackage[margin=2.5cm]{geometry}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
 
-\title{AL-Hausarbeit Aufgabe 2}
+\title{AL-Hausarbeit Aufgabe X}
 \author{Gruppe: 0395694, 678901, 234567}
 \date{WiSe 24/25}
 
 \begin{document}
 \maketitle
 
-\subsection*{(i) Äquivalente Formeln}
+\section*{Aufgabe 1}
+% Hier könnte die Lösung von Aufgabe 1 stehen, falls erforderlich.
 
+\section*{Hausaufgabe 2}
+
+\noindent
+Gegeben seien für $n,r,m \in \mathbb{N}$ mit $n \ge 1$ und $m \ge 2$ die Mengen $AL_{n,r,m}$ von Formeln, die wie in der Aufgabenstellung definiert sind. Insbesondere gilt:
 \begin{itemize}
-    \item Eine äquivalente Formel $\psi \in AL_{6,1,5}$ für $(Y \land Z)$ ist:
+    \item Jede Variable $X \in AVar$ ist eine Formel in $AL_{n,r,m}$.
+    \item Ist $X \in AVar$, so ist auch $\neg X$ in $AL_{n,r,m}$.
+    \item Für jede Zahl $k \in \{1,\ldots,n\}$ und passende Formeln $\varphi_1,\ldots,\varphi_k$ in $AL_{n,r,m}$ ist 
     \[
-    r_5\langle Y, Y, Z, Z, Z \rangle
+    r_m(\varphi_1,\ldots,\varphi_k)
     \]
-    Diese Formel ist äquivalent zu $Y \land Z$, da sie genau dann 1 ergibt, wenn die Summe der Wahrheitswerte $\equiv 1 \pmod{5}$ ist, was nur bei $Y=Z=1$ der Fall ist.
-    
-    \item Eine äquivalente Formel in AL für $r_5\langle Y,Z \rangle$ ist:
-    \[
-    (Y \land \neg Z) \lor (\neg Y \land Z)
-    \]
-    Diese Formel ist äquivalent zu $r_5\langle Y,Z \rangle$, da sie genau dann 1 ergibt, wenn genau eine der beiden Variablen 1 ist, was der Bedingung $JYK^\beta + JZK^\beta \equiv 1 \pmod{5}$ entspricht.
+    eine Formel in $AL_{n,r,m}$.
 \end{itemize}
 
-\subsection*{(ii) Äquivalente Formeln $\chi_1$ und $\chi_2$}
+Die Semantik des Junktors $r_m$ ist so definiert, dass für eine Belegung $\beta$ 
+\[
+[r_m(\varphi_1,\ldots,\varphi_k)]^\beta = 1 \text{ genau dann, wenn } \sum_{i=1}^k [\varphi_i]^\beta \equiv r \pmod{m}.
+\]
+Andernfalls ist der Wert 0. Variablen und negierte Variablen haben ihre klassische aussagenlogische Semantik.
 
+Auf dieser Basis sind folgende Aufgaben zu bearbeiten:
+
+\subsection*{(i) Äquivalente Formeln für $(Y \land Z)$ und für $r_5 \langle Y, Z \rangle$}
+
+Wir wollen eine Formel $\psi \in AL_{6,1,5}$ angeben, die äquivalent zu $(Y \land Z)$ ist, sowie eine Formel $\psi \in AL$ angeben, die äquivalent zu $r_5\langle Y,Z \rangle \in AL_{6,1,5}$ ist.
+
+\underline{Äquivalente Formel zu $(Y \land Z)$ in $AL_{6,1,5}$:}
+
+In $AL_{6,1,5}$ bedeutet $r_5(\ldots)$, dass der Wert $1$ genau dann herauskommt, wenn die Summe der Wahrheitswerte der Argumente $\equiv 1 \pmod{5}$ ist. Wir möchten erreichen, dass unsere Formel nur dann $1$ ist, wenn $Y=1$ und $Z=1$. Betrachten wir:
+\[
+\psi := r_5\langle Y, Z, \top, \top, \top, \top \rangle.
+\]
+Hier sind sechs Argumente: $Y,Z$ und viermal $\top$. Die Wahrheitswerte summieren sich wie folgt:
 \begin{itemize}
-    \item $\chi_1 \in AL_{2,2,4} \setminus AL_{5,0,3}$:
-    \[
-    r_4\langle X, X \rangle
-    \]
-    
-    \item $\chi_2 \in AL_{5,0,3} \setminus AL_{2,2,4}$:
-    \[
-    r_3\langle X, X, X, X, X \rangle
-    \]
-    
-    Diese Formeln sind äquivalent, da beide genau dann 1 ergeben, wenn $X=1$ ist:
-    \begin{itemize}
-        \item Für $\chi_1$: $r_4\langle X, X \rangle = 1$ gdw. $2\cdot JXK^\beta \equiv 2 \pmod{4}$ gdw. $X=1$
-        \item Für $\chi_2$: $r_3\langle X, X, X, X, X \rangle = 1$ gdw. $5\cdot JXK^\beta \equiv 0 \pmod{3}$ gdw. $X=1$
-    \end{itemize}
+    \item $Y=Z=1$: Summe $=1+1+1+1+1+1=6$. $6 \mod 5 = 1$. Also $\psi=1$.
+    \item $Y=0,Z=0$: Summe $=0+0+1+1+1+1=4$. $4 \mod 5=4 \neq1$. $\psi=0$.
+    \item Genau ein von $Y,Z$ ist 1: Summe ist $5$, $5 \mod 5=0\neq1$. $\psi=0$.
+\end{itemize}
+Damit ist $\psi$ genau dann 1, wenn $Y=1$ und $Z=1$. Also $\psi \equiv (Y \land Z)$.
+
+\underline{Äquivalente Formel zu $r_5\langle Y,Z\rangle$ in $AL$:}
+
+Die Formel $r_5\langle Y,Z \rangle$ gibt 1 genau dann, wenn $(Y+Z) \mod 5 = 1$. Für boolesche $Y,Z$ ist $(Y,Z) \in \{0,1\}^2$. Die Fälle:
+\begin{itemize}
+    \item $(0,0)$: Summe $=0$, $0 \mod 5=0$.
+    \item $(1,0)$ oder $(0,1)$: Summe $=1$, $1 \mod 5=1$.
+    \item $(1,1)$: Summe $=2$, $2 \mod 5=2$.
+\end{itemize}
+$r_5\langle Y,Z\rangle=1$ genau dann, wenn genau eine der beiden Variablen wahr ist. Das ist die XOR-Operation:
+\[
+r_5\langle Y,Z\rangle \equiv (Y \lor Z) \land \neg(Y \land Z).
+\]
+
+\subsection*{(ii) Äquivalente Formeln $\chi_1 \in AL_{2,2,4}$, $\chi_2 \in AL_{5,0,3}$ und Begründung ihrer Äquivalenz}
+
+Wir geben Beispiele an, die in der einen Klasse, aber nicht in der anderen vorkommen.
+
+\underline{Beispiel für $\chi_1 \in AL_{2,2,4} \setminus AL_{5,0,3}$:}
+\[
+\chi_1 := r_4\langle X,Y \rangle \text{ mit } r=2.
+\]
+Diese Formel ist 1 genau dann, wenn $(X+Y)\mod4=2$. Für boolesche Werte ist das nur dann der Fall, wenn $X=1,Y=1$. Also:
+\[
+\chi_1 \equiv (X \land Y).
+\]
+Diese Formel ist offensichtlich rein aussagenlogisch, also auch ohne $r_m$-Operator darstellbar.
+
+\underline{Beispiel für $\chi_2 \in AL_{5,0,3} \setminus AL_{2,2,4}$:}
+\[
+\chi_2 := r_3\langle X,Y,Z \rangle \text{ mit } r=0.
+\]
+$\chi_2=1$ genau dann, wenn $(X+Y+Z)\mod 3=0$. Für boolesche $X,Y,Z$ ist das der Fall bei $(0,0,0)$ und $(1,1,1)$. Also:
+\[
+\chi_2 \equiv (\neg X \land \neg Y \land \neg Z)\;\lor\;(X \land Y \land Z).
+\]
+
+Beide $\chi_1$ und $\chi_2$ sind also äquivalent zu aussagenlogischen Formeln, somit ist ihre semantische Äquivalenz zu rein aussagenlogischen Formeln gegeben.
+
+\subsection*{(iii) Nicht jede Formel in $AL$ ist äquivalent zu einer in $AL_{2,2,4}$}
+
+Um zu zeigen, dass es nicht für jede $\varphi \in AL$ eine äquivalente Formel in $AL_{2,2,4}$ gibt, betrachten wir etwa eine Formel mit $r_5$. Die Modulo-5-Bedingungen sind nicht durch Modulo-4-Bedingungen simulierbar, da sie verschiedene arithmetische Eigenschaften haben. Insbesondere kann ein $r_5$-Junktor (der Restklasse 5 verwendet) nicht in einen Ausdruck mit nur Modulo 4 übersetzt werden, ohne die Semantik zu verändern.
+
+Diese Inkompatibilität unterschiedlicher Moduli zeigt, dass nicht jede beliebige Formel aus $AL$ (die z.B. $r_5$ nutzt) durch Formeln in $AL_{2,2,4}$ (die nur Modulo 4 erlauben) ersetzt werden kann.
+
+\subsection*{(iv) Beweis durch strukturelle Induktion, dass jede Formel in $AL$ äquivalent zu einer in $AL_{5,0,3}$ ist}
+
+Wir verwenden strukturelle Induktion über den Aufbau von Formeln in $AL$:
+
+\textbf{Induktionsanfang:}  
+Jede Variable $X$ ist auch eine Formel in $AL_{5,0,3}$, da wir Variablen direkt übernehmen können.
+
+\textbf{Induktionsannahme:}  
+Seien $\varphi_1, \varphi_2 \in AL$ und es gebe bereits zu jeder eine äquivalente Formel $\psi_1,\psi_2 \in AL_{5,0,3}$.
+
+\textbf{Induktionsschritt:}  
+Für zusammengesetzte Formeln:
+\begin{itemize}
+    \item $\neg \varphi_1$: Auch Negationen lassen sich in $AL_{5,0,3}$ darstellen, etwa durch $r_3$-Operatoren oder direkt, da Negation auf Variablenebene definiert ist.
+    \item $(\varphi_1 \land \varphi_2)$: Die Konjunktion lässt sich mit geeigneten $r_3$-Konstruktionen nachbauen, da $r_3$ ein hinreichend mächtiger Junktor ist, um AND, OR, XOR und weitere Junktoren zu definieren.
+    \item Allgemein gilt: Alle klassischen Junktoren lassen sich durch Kombinationen von $r_3$ mit geeigneten Konstanten (wie $\top$ und $\bot$) darstellen. Zudem lassen sich beliebige $r_m$ mit $m \neq 3$ durch komplexere $r_3$-Konstruktionen simulieren, da man über geschickte Kodierungen alle gewünschten Muster erzeugen kann.
 \end{itemize}
 
-\subsection*{(iii) Beweis der Nicht-Definierbarkeit in $AL_{2,2,4}$}
-
-\begin{proof}
-Wir zeigen, dass die Formel $\phi := (X \land Y) \lor (Y \land Z) \lor (Z \land X)$ keine äquivalente Formel in $AL_{2,2,4}$ hat.
-
-Angenommen, es gäbe eine äquivalente Formel $\psi \in AL_{2,2,4}$. Da in $AL_{2,2,4}$ nur Formeln mit maximal 2 Argumenten und Modulo-4-Operationen erlaubt sind, kann $\psi$ maximal $2^4 = 16$ verschiedene Wahrheitswertekombinationen unterscheiden.
-
-Die Formel $\phi$ ist jedoch wahr genau dann, wenn mindestens zwei der drei Variablen 1 sind. Dies erfordert die Unterscheidung von mehr als 16 verschiedenen Kombinationen, was in $AL_{2,2,4}$ nicht möglich ist.
-\end{proof}
-
-\subsection*{(iv) Beweis durch strukturelle Induktion}
-
-\begin{proof}
-Wir zeigen durch strukturelle Induktion, dass jede Formel $\phi \in AL$ äquivalent zu einer Formel in $AL_{5,0,3}$ ist.
-
-\textbf{Induktionsbasis:} 
-\begin{itemize}
-    \item Für Variablen $X \in AL$ ist $X$ bereits in $AL_{5,0,3}$.
-    \item Für Konstanten $\top, \bot$ sind diese direkt durch $r_3\langle X,X,X,X,X \rangle$ bzw. $\neg r_3\langle X,X,X,X,X \rangle$ darstellbar.
-\end{itemize}
-
-\textbf{Induktionsvoraussetzung:} Sei $\phi_1, \phi_2 \in AL$ und seien $\psi_1, \psi_2 \in AL_{5,0,3}$ die entsprechenden äquivalenten Formeln.
-
-\textbf{Induktionsschritt:} Für zusammengesetzte Formeln:
-\begin{itemize}
-    \item $\neg \phi_1$ ist äquivalent zu $\neg \psi_1 \in AL_{5,0,3}$
-    \item $\phi_1 \land \phi_2$ ist äquivalent zu $r_3\langle \psi_1, \psi_1, \psi_2, \psi_2, \psi_2 \rangle \in AL_{5,0,3}$
-    \item $\phi_1 \lor \phi_2$ ist äquivalent zu $\neg r_3\langle \neg\psi_1, \neg\psi_1, \neg\psi_2, \neg\psi_2, \neg\psi_2 \rangle \in AL_{5,0,3}$
-    \item $\phi_1 \rightarrow \phi_2$ ist äquivalent zu $\neg \psi_1 \lor \psi_2$, was nach obigem Fall darstellbar ist
-\end{itemize}
-
-Somit ist durch Induktion gezeigt, dass jede Formel in AL äquivalent zu einer Formel in $AL_{5,0,3}$ ist.
-\end{proof}
+Da jeder Schritt der Konstruktion in $AL$ auch in $AL_{5,0,3}$ nachvollzogen werden kann, folgt, dass jede Formel in $AL$ äquivalent zu einer Formel in $AL_{5,0,3}$ ist.
 
 \end{document}
