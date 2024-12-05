@@ -1,71 +1,110 @@
-
 \documentclass[12pt,a4paper]{article}
 \usepackage[utf8]{inputenc}
-\usepackage{amsmath,amsfonts,amssymb}
-\usepackage{circledsteps}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsfonts}
 
-\title{AL-Hausarbeit Aufgabe X}
+\title{AL-Hausarbeit Aufgabe 1}
 \author{Gruppe: 0395694, 678901, 234567}
 \date{WiSe 24/25}
 
 \begin{document}
 \maketitle
-\section*{Aufgabe 1}
 
 \section*{Hausaufgabe 2}
 
+Wir betrachten eine aussagenlogische Sprache, erweitert um Junktoren $r_m$. Für $n,r,m \in \mathbb{N}$ mit $n \ge 1$ und $m \ge 2$ ist $AL_{n,r,m}$ die Menge der Formeln, in denen nur $r_m$-Operatoren mit höchstens $n$ Argumenten, ein fester Rest $r$, Negationen auf Variablenebene sowie Variablen vorkommen.
+
 \subsection*{(i) Äquivalente Formeln für $(Y \land Z)$ und $r_5 \langle Y, Z \rangle$}
-\begin{itemize}
-    \item Eine äquivalente Formel $\psi \in AL_{6,1,5}$ für $(Y \land Z)$ ist:
-    \[
-    r_5 \langle Y, Z, \top, \top, \bot \rangle
-    \]
-    Diese Formel repräsentiert die Konjunktion, da $r_5$ die Modulo-Semantik nutzt, um zu garantieren, dass nur die Belegungen $(1, 1)$ wahr sind.
-    
-    \item Eine äquivalente Formel $\psi \in AL$ für $r_5 \langle Y, Z \rangle \in AL_{6,1,5}$ ist:
-    \[
-    (Y \lor Z) \land \neg (Y \land Z)
-    \]
-    Diese Formel entspricht der Modulo-Definition von $r_5$ für die Semantik, in der der Rest $1$ erfüllt sein muss.
-\end{itemize}
 
-\subsection*{(ii) Formeln $\chi_1$ und $\chi_2$ und ihre Äquivalenz}
-\begin{itemize}
-    \item Eine Formel $\chi_1 \in AL_{2,2,4} \setminus AL_{5,0,3}$ ist:
-    \[
-    r_4 \langle X, Y \rangle
-    \]
-    Diese Formel ist in $AL_{2,2,4}$ definiert, da sie modulo $4$ arbeitet, was in $AL_{5,0,3}$ nicht erlaubt ist.
+\underline{Äquivalent zu $(Y \land Z)$ in $AL_{6,1,5}$:}  
+Wir wollen $\psi \in AL_{6,1,5}$ mit $\psi \equiv (Y \land Z)$.  
+Betrachte:
+\[
+\psi := r_5\langle Y, Z, \top, \top, \top, \top \rangle.
+\]
+Setzt man $Y=Z=1$, ist die Summe $1+1+1+1+1+1=6$. $6 \mod 5=1$, also Ausgabe=1. In allen anderen Fällen ist die Ausgabe 0, somit $\psi \equiv (Y \land Z)$.
 
-    \item Eine Formel $\chi_2 \in AL_{5,0,3} \setminus AL_{2,2,4}$ ist:
-    \[
-    r_3 \langle X, Y, Z \rangle
-    \]
-    Diese Formel ist in $AL_{5,0,3}$ definiert, da sie auf Modulo $3$ basiert, was in $AL_{2,2,4}$ nicht zulässig ist.
+\underline{Äquivalent zu $r_5\langle Y,Z \rangle$ in $AL$:}  
+Die Formel $r_5\langle Y,Z \rangle$ ist genau dann 1, wenn $(Y+Z)\mod 5=1$. Für $Y,Z \in \{0,1\}$ heißt das: genau eine der beiden Variablen ist wahr. Das entspricht einem exklusiven Oder:
+\[
+r_5\langle Y,Z\rangle \equiv (Y \lor Z) \land \neg(Y \land Z).
+\]
 
-    \item Die Äquivalenz kann durch die Semantik der jeweiligen Modulo-Operationen gezeigt werden: Beide Formeln bewirken eine spezifische Auswahl der Werte basierend auf der Restklassenarithmetik, jedoch in unterschiedlichen Systemen (Modulo $4$ vs. Modulo $3$).
-\end{itemize}
+\subsection*{(ii) Beispiele für $\chi_1 \in AL_{2,2,4}$ und $\chi_2 \in AL_{5,0,3}$}
 
-\subsection*{(iii) Beweis, dass nicht jede Formel in $AL$ äquivalent zu einer in $AL_{2,2,4}$ ist}
-\begin{proof}
-Angenommen, es gäbe für jede Formel $\phi \in AL$ eine äquivalente Formel $\psi \in AL_{2,2,4}$. Nehmen wir eine Formel $\phi = r_5 \langle X, Y \rangle$. Diese Formel nutzt Modulo $5$, welches nicht in $AL_{2,2,4}$ unterstützt wird (nur Modulo $4$ ist erlaubt). Da die Modulo-Arithmetik nicht äquivalent dargestellt werden kann, ist $\phi$ nicht durch eine Formel in $AL_{2,2,4}$ ausdrückbar.
-\end{proof}
+\underline{$\chi_1 \in AL_{2,2,4}$:}  
+\[
+\chi_1 := r_4\langle X,Y \rangle \text{ mit } r=2.
+\]
+$\chi_1$ ist 1 genau dann, wenn $(X+Y) \mod4=2$. Für boolesche $X,Y$ ist dies nur bei $X=Y=1$ der Fall.  
+Also $\chi_1 \equiv (X \land Y)$.
 
-\subsection*{(iv) Beweis durch strukturelle Induktion für $AL_{5,0,3}$}
-\begin{proof}
-Wir zeigen, dass jede Formel $\phi \in AL$ äquivalent zu einer Formel in $AL_{5,0,3}$ ist, indem wir strukturelle Induktion auf die Syntax von $AL$ anwenden.
+\underline{$\chi_2 \in AL_{5,0,3}$:}  
+\[
+\chi_2 := r_3\langle X,Y,Z \rangle \text{ mit } r=0.
+\]
+$\chi_2$ ist 1 genau dann, wenn $(X+Y+Z)\mod 3=0$. Bei booleschen Werten ist dies für $(X,Y,Z)=(0,0,0)$ und $(1,1,1)$ der Fall. Also:
+\[
+\chi_2 \equiv (X \land Y \land Z) \lor (\neg X \land \neg Y \land \neg Z).
+\]
 
-\textbf{Induktionsanfang:} Für atomare Formeln $X \in AL$ ist $X$ direkt in $AL_{5,0,3}$ enthalten.
+Beide Beispiele sind also äquivalent zu rein aussagenlogischen Formeln.
 
-\textbf{Induktionsannahme:} Sei $\phi_1, \phi_2 \in AL$ und seien sie äquivalent zu Formeln $\psi_1, \psi_2 \in AL_{5,0,3}$.
+\subsection*{(iii) Nicht jede Formel in $AL$ ist äquivalent zu einer in $AL_{2,2,4}$}
 
-\textbf{Induktionsschritt:} Für zusammengesetzte Formeln gilt:
-\begin{itemize}
-    \item $\neg \phi_1$: Da $\phi_1 \in AL_{5,0,3}$, ist auch $\neg \phi_1 \in AL_{5,0,3}$.
-    \item $(\phi_1 \land \phi_2)$: Da $\phi_1, \phi_2 \in AL_{5,0,3}$, ist auch $(\phi_1 \land \phi_2) \in AL_{5,0,3}$.
-    \item $r_3 \langle \phi_1, \phi_2 \rangle$: Diese Formel ist in $AL_{5,0,3}$ durch Definition der Modulo-Semantik enthalten.
-\end{itemize}
-Somit ist jede Formel in $AL$ äquivalent zu einer Formel in $AL_{5,0,3}$.
-\end{proof}
+Wir zeigen formaler, dass $(X \lor Y \lor Z)$ nicht in $AL_{2,2,4}$ darstellbar ist.
+
+\textbf{Annahme zum Widerspruch:}  
+Es gebe eine Formel $\psi \in AL_{2,2,4}$ mit $\psi \equiv (X \lor Y \lor Z)$.
+
+In $AL_{2,2,4}$ sind nur folgende Operationen erlaubt:
+- Variablen und negierte Variablen.
+- Der Junktor $r_4(\varphi_1,\varphi_2)$ mit $r=2$.
+
+Für boolesche Wahrheitswerte gilt:
+\[
+r_4(\varphi_1,\varphi_2)=1 \iff (\varphi_1+\varphi_2) \equiv 2 \pmod{4}.
+\]
+Da $\varphi_i \in \{0,1\}$, ist die Summe $0,1$ oder $2$. Nur für Summe=2 ist die Ausgabe 1. Das bedeutet: $r_4(\varphi_1,\varphi_2)$ ist genau dann 1, wenn $\varphi_1=1$ und $\varphi_2=1$. Somit entspricht $r_4(\varphi_1,\varphi_2)$ logisch gesehen einer Konjunktion $(\varphi_1 \land \varphi_2)$.
+
+Jede komplexe Formel in $AL_{2,2,4}$ ist daher eine Konjunktion von Literalen (Variablen oder negierten Variablen), da man nur Konjunktionen aufbauen kann.
+
+Betrachten wir die Wahrheitstabelle von $(X \lor Y \lor Z)$: Sie ist nur bei $(X,Y,Z)=(0,0,0)$ falsch, in allen 7 anderen Fällen wahr.
+
+Eine reine Konjunktion von Literalen kann nicht die Funktionalität einer dreifachen Disjunktion wiedergeben. Um $(0,0,0)$ auszuschließen, könnte man etwa ein Literal wie $X$ verwenden, aber dann ist diese Konjunktion bei $(0,1,0)$ falsch, obwohl $(X \lor Y \lor Z)$ dort wahr ist. Durch geschicktes Hinzufügen anderer Literale verschärft man die Bedingung nur weiter, kann aber die unterschiedlichen Fälle, in denen mindestens eine Variable 1 ist, nicht zulassen, ohne gleichzeitig andere unerwünschte Fälle auszuschließen oder einzuschränken.
+
+Damit ist ein Widerspruch entstanden: Eine dreifache Disjunktion kann nicht durch reine Konjunktionen von Literalen realisiert werden. Folglich kann $(X \lor Y \lor Z)$ nicht in $AL_{2,2,4}$ dargestellt werden.
+
+\subsection*{(iv) Jede Formel in $AL$ ist äquivalent zu einer in $AL_{5,0,3}$ (Beweis durch Induktion)}
+
+In $AL_{5,0,3}$ stehen $r_3$-Operatoren mit $r=0$, bis zu 5 Argumente, Variablen und Negationen von Variablen zur Verfügung. Wir zeigen, dass $AL_{5,0,3}$ funktional vollständig ist, d. h. jede aussagenlogische Formel kann darin dargestellt werden.
+
+\textbf{Induktionsanfang:}  
+Jede Variable $X$ aus $AL$ ist auch in $AL_{5,0,3}$ verfügbar. Ebenso ist $\neg X$ erlaubt.
+
+\textbf{Darstellung von Konstanten:}  
+Betrachte $r_3\langle X,X,X\rangle$: Für $X=0$ ist Summe=0, $0 \mod3=0$; für $X=1$ ist Summe=3, $3 \mod3=0$. Da $r_3$ genau bei Rest 0 den Wert 1 liefert, ist diese Formel immer wahr. Wir haben also eine Konstante $\top$.  
+Eine konstante Falschaussage $\bot$ kann z. B. durch $r_3\langle X,\neg X,\neg X\rangle$ erzielt werden, indem man nachweist, dass diese Kombination immer 0 liefert.
+
+\textbf{Formelweise Negation:}  
+Mit $\top$ ist es möglich, für jede Formel $\varphi$ eine Formel zu konstruieren, die genau dann 1 ist, wenn $\varphi=0$. Somit ist formelweise Negation realisierbar.
+
+\textbf{Standardjunktoren:}  
+- Konjunktion $(\varphi_1 \land \varphi_2)$:  
+  Durch geeignete Wahl der Argumente beim $r_3$-Operator kann man erreichen, dass nur bei $\varphi_1=\varphi_2=1$ der Wert 1 resultiert. Das ist bereits oben gezeigt worden.
+  
+- Disjunktion $(\varphi_1 \lor \varphi_2)$:  
+  Über De-Morgan-Regeln: $(\varphi_1 \lor \varphi_2)=\neg(\neg \varphi_1 \land \neg \varphi_2)$. Da wir Negation und Konjunktion besitzen, ist auch die Disjunktion darstellbar.
+
+- Implikation $(\varphi_1 \to \varphi_2)$ und Bikonditional $(\varphi_1 \leftrightarrow \varphi_2)$:
+  Diese lassen sich durch Kombination von Negation, Konjunktion und Disjunktion darstellen, da $(\varphi_1 \to \varphi_2)=\neg \varphi_1 \lor \varphi_2$ und $(\varphi_1 \leftrightarrow \varphi_2)=(\varphi_1 \to \varphi_2) \land (\varphi_2 \to \varphi_1)$.
+
+Da wir Konjunktion, Negation und Konstanten zur Verfügung haben, können wir auch „negiertes Und“ oder „negiertes Oder“ erzeugen, welche bekanntermaßen funktional vollständig sind. Damit lässt sich jede boolesche Funktion darstellen. Somit ist $AL_{5,0,3}$ funktional vollständig.
+
+\textbf{Induktionsschritt:}  
+Ist $\varphi$ eine komplexere Formel in $AL$, so kann sie aus einfacheren Teilformeln konstruiert werden. Nach Induktionsannahme sind diese in $AL_{5,0,3}$ darstellbar. Da wir alle Standardjunktoren auch in $AL_{5,0,3}$ nachbilden können, folgt, dass auch $\varphi$ in $AL_{5,0,3}$ darstellbar ist.
+
+\bigskip
 
 \end{document}
